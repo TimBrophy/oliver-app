@@ -3,7 +3,6 @@ import streamlit as st
 import os
 import openai
 from elasticsearch import Elasticsearch
-from apikey import user, password, cloud_id, openai_api_key, openai_api_type, openai_api_base, openai_api_version
 from langchain.embeddings import ElasticsearchEmbeddings
 from langchain.chat_models import AzureChatOpenAI
 from langchain.schema import (
@@ -14,26 +13,19 @@ from langchain.schema import (
 import tiktoken
 import json
 from datetime import datetime, timedelta
-
+from dotenv import load_env
+load_dotenv()
 
 #------------------------------------------
 #        connect to elasticsearch
 #------------------------------------------
 
-os.environ['elastic_user'] = user
-os.environ['elastic_password'] = password
-os.environ['elastic_cloud_id'] = cloud_id
-os.environ['openai_api_key'] = openai_api_key
-os.environ['openai_api_type'] = openai_api_type
-os.environ['openai_api_base'] = openai_api_base
-os.environ['openai_api_version'] = openai_api_version
-
-BASE_URL = openai_api_base
-API_KEY = openai_api_key
+BASE_URL = os.environ['openai_api_base']
+API_KEY = os.environ['openai_api_key']
 DEPLOYMENT_NAME = "timb-fsi-demo"
 chat_model = AzureChatOpenAI(
     openai_api_base=BASE_URL,
-    openai_api_version=openai_api_version,
+    openai_api_version=os.environ['openai_api_version'],
     deployment_name=DEPLOYMENT_NAME,
     openai_api_key=API_KEY,
     openai_api_type="azure",
