@@ -13,15 +13,21 @@ from langchain.schema import (
 import tiktoken
 import json
 from datetime import datetime, timedelta
-from dotenv import load_env
-load_dotenv()
+os.environ['openai_api_base']=st.secrets['openai_api_base']
+os.environ['openai_api_key']=st.secrets['openai_api_key']
+os.environ['openai_api_version']=st.secrets['openai_api_version']
+os.environ['elastic_cloud_id']=st.secrets['cloud_id']
+os.environ['elastic_user']=st.secrets['user']
+os.environ['elastic_password']=st.secrets['password']
 
 #------------------------------------------
 #        connect to elasticsearch
 #------------------------------------------
 
+
 BASE_URL = os.environ['openai_api_base']
 API_KEY = os.environ['openai_api_key']
+
 DEPLOYMENT_NAME = "timb-fsi-demo"
 chat_model = AzureChatOpenAI(
     openai_api_base=BASE_URL,
